@@ -9,6 +9,7 @@ import 'package:farm_thoughts_web_app/features/lines/widgets/lines_card.dart';
 import 'package:farm_thoughts_web_app/features/lines/widgets/locality_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LineDashboardScreen extends StatefulWidget {
   const LineDashboardScreen({super.key});
@@ -38,6 +39,17 @@ class _LineDashboardScreenState extends State<LineDashboardScreen> {
     "Nellithope",
     "Mettupalayam",
     "Thavalakuppam",
+  ];
+
+  final List<Map<String, String>> deliveryAgents = [
+    {
+      "deliveryAgentName": "Ravi Kumar",
+      "deliveryAgentNumber": "+91 9876543210",
+    },
+    {
+      "deliveryAgentName": "Anjali Sharma",
+      "deliveryAgentNumber": "+91 8765432109",
+    },
   ];
 
   @override
@@ -271,30 +283,78 @@ class _LineDashboardScreenState extends State<LineDashboardScreen> {
                                     // Right side
                                     Expanded(
                                       child: Container(
-                                        color: Colors.green,
+                                        // color: Colors.green,
                                         child: Padding(
                                           padding: const EdgeInsets.all(12),
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
+                                              // Title
                                               Text(
                                                 "Assigned Delivery Agent",
                                                 style: TextStyle(
-                                                  fontSize: 15,
+                                                  fontSize: 18,
                                                   fontWeight: FontWeight.bold,
+                                                  color: AppColors.primaryColor,
                                                 ),
                                               ),
+                                              const SizedBox(height: 8),
+
                                               Expanded(
-                                                child: ListView.builder(
-                                                  itemCount: 4,
-                                                  itemBuilder:
-                                                      (
-                                                        BuildContext context,
-                                                        int index,
-                                                      ) {
-                                                        return AssignedDeliveryAgentDetailsCard();
-                                                      },
+                                                child: Column(
+                                                  children: [
+                                                    // Agent Cards List
+                                                    Expanded(
+                                                      child: ListView.builder(
+                                                        physics:
+                                                            const BouncingScrollPhysics(),
+                                                        itemCount:
+                                                            deliveryAgents
+                                                                .length,
+                                                        itemBuilder:
+                                                            (
+                                                              BuildContext
+                                                              context,
+                                                              int index,
+                                                            ) {
+                                                              final data =
+                                                                  deliveryAgents[index];
+                                                              return Padding(
+                                                                padding:
+                                                                    const EdgeInsets.symmetric(
+                                                                      vertical:
+                                                                          6,
+                                                                    ),
+                                                                child: AssignedDeliveryAgentDetailsCard(
+                                                                  deliveryAgentName:
+                                                                      data['deliveryAgentName']!,
+                                                                  deliveryAgentNumber:
+                                                                      data['deliveryAgentNumber']!,
+                                                                ),
+                                                              );
+                                                            },
+                                                      ),
+                                                    ),
+
+                                                    // Google Map (fixed at bottom)
+                                                    Expanded(
+                                                      child: GoogleMap(
+                                                        initialCameraPosition:
+                                                            const CameraPosition(
+                                                              target: LatLng(
+                                                                11.9416,
+                                                                79.8083,
+                                                              ),
+                                                              zoom: 14,
+                                                            ),
+                                                        zoomControlsEnabled:
+                                                            false,
+                                                        myLocationButtonEnabled:
+                                                            false,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],
