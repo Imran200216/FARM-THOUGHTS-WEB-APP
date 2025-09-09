@@ -7,6 +7,7 @@ import 'package:farm_thoughts_web_app/core/theme/app_colors.dart';
 import 'package:farm_thoughts_web_app/features/dashboard/widgets/dashboard_top_bar.dart';
 import 'package:farm_thoughts_web_app/features/delivery_agent/widgets/add_agent_form.dart';
 import 'package:farm_thoughts_web_app/features/delivery_entries/providers/delivery_entries_provider.dart';
+import 'package:farm_thoughts_web_app/features/delivery_entries/widgets/add_customer_entries_form.dart';
 import 'package:farm_thoughts_web_app/features/delivery_entries/widgets/add_delivery_agents_entries.dart';
 import 'package:farm_thoughts_web_app/features/delivery_entries/widgets/delivery_entries_card.dart';
 import 'package:farm_thoughts_web_app/features/delivery_entries/widgets/edit_delivery_entries.dart';
@@ -301,22 +302,9 @@ class _DeliveryEntriesScreenState extends State<DeliveryEntriesScreen> {
                   child: Consumer<DeliveryEntriesProvider>(
                     builder: (context, deliveryEntriesProvider, child) {
                       if (deliveryEntriesProvider.isAddedEnabled) {
-                        return AddAgentForm(
-                          onClose: () => context.readDeliveryEntriesProvider
-                              .resetAllEntries(),
-                          onAddVendor: (Map<String, String> data) {
-                            // Add Customer Deliver
-                            customerDeliveries.add(data);
-
-                            // Reset All Entries
-                            context.readDeliveryEntriesProvider
-                                .resetAllEntries();
-
-                            // Success Snack Bar
-                            context.showSuccessSnackBar(
-                              "${data['name']} has been added successfully",
-                            );
-                          },
+                        return AddCustomerEntriesForm(
+                          onArrowBackTap: () {},
+                          onNextTap: () {},
                         );
                       } else if (deliveryEntriesProvider.isViewDetailsEnabled) {
                         return ViewDeliveryEntriesDetails(

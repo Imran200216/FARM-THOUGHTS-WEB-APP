@@ -72,7 +72,6 @@ class DeliveryEntriesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   void resetAllEntries() {
     isAddedEnabled = false;
     isViewDetailsEnabled = false;
